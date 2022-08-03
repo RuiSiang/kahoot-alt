@@ -93,6 +93,6 @@ const auth = basicAuth({
 
 app.use('/host', auth)
 app.use(express.static('public'))
-http.listen(3000, () => {
+http.listen(3000 || process.env.PORT, () => {
   console.log('listening on *:3000')
 })
