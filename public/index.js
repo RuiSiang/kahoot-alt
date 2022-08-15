@@ -3,31 +3,45 @@ const socket = io()
 let loader = document.createElement("div")
 loader.classList.add("loader")
 
+function shuffle(array) {
+    let currentIndex = array.length, randomIndex;
+    while (currentIndex != 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
+}
+
 socket.on("question", (question) => {
+
+    const shuffledAnswers = shuffle(question.answers)
     swal({
         title: question.text,
         buttons: {
             1: {
-                text: question.answers[0],
+                text: shuffledAnswers[0],
                 value: 1,
             },
             2: {
-                text: question.answers[1],
+                text: shuffledAnswers[1],
                 value: 2,
             },
             3: {
-                text: question.answers[2],
+                text: shuffledAnswers[2],
                 value: 3,
             },
             4: {
-                text: question.answers[3],
+                text: shuffledAnswers[3],
                 value: 4,
             },
         },
         closeOnClickOutside: false,
         closeOnEsc: false,
     }).then(answer => {
-        socket.emit("answer", question.answers[answer - 1]) // We subtract 1 because arrays start at 0 and not 1
+        socket.emit("answer", shuffledAnswers[answer - 1]) // We subtract 1 because arrays start at 0 and not 1
         swal({
             title: "Waiting for others",
             buttons: false,
