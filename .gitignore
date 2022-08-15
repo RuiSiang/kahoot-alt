@@ -1,5 +1,5 @@
 problems.json
-problems/
+problems/**.json
 app.js
 
 # Logs
