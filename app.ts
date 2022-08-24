@@ -72,9 +72,11 @@ io.on('connection', (socket: Socket) => {
   timeUpEvent.on('timeUp', (correctAnswer) => {
     if (attempt) {
       if (attempt === correctAnswer) {
-        userPointsMap[socket.id][1] += Math.floor(
-          ((Date.now() - timestamp) / 100) ** 2
-        )
+        if (userPointsMap[socket.id]) {
+          userPointsMap[socket.id][1] += Math.floor(
+            ((Date.now() - timestamp) / 100) ** 2
+          )
+        }
         socket.emit('correct')
       } else {
         socket.emit('incorrect')
