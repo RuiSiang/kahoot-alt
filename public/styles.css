@@ -1,38 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2860be;
+    --alert-color: #bb1b3a;
+    --success-color: #459429;
+    --warning-color: #c59a30;
+    --font-family: "Open Sans", sans-serif;
+}
+
 body {
-    font-family: "Open Sans", sans-serif;
+    font-family: var(--font-family);
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
 }
 
-.swal-button--1 {
-    background-color: #bb1b3a;
+.swal-button {
+    font-weight: bold;
 }
 
-.swal-button--2 {
-    background-color: #2860be;
-}
+.swal-button--1 { background-color: var(--alert-color); }
+.swal-button--2 { background-color: var(--secondary-color); }
+.swal-button--3 { background-color: var(--warning-color); }
+.swal-button--4 { background-color: var(--success-color); }
 
-.swal-button--3 {
-    background-color: #c59a30;
-}
-
-.swal-button--4 {
-    background-color: #459429;
-}
-
-.swal-footer {
+.swal-footer, .swal-content {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.swal-content {
-    display: flex;
-    justify-content: center;
-}
-
 .loader {
     border: 16px solid #f3f3f3;
-    border-top: 16px solid #3498db;
+    border-top: 16px solid var(--primary-color);
     border-radius: 50%;
     width: 120px;
     height: 120px;
@@ -40,35 +40,28 @@ body {
 }
 
 @keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 @media (orientation: landscape) {
-    .swal-modal {
-        width: 50vw
-    }
+    .swal-modal { width: 50vw; }
 }
 
 @media (orientation: portrait) {
-    .swal-modal {
-        width: 90vw
-    }
+    .swal-modal { width: 90vw; }
 }
 
 .swal-modal {
-    height: 30rem;
-    max-height: 90vh;
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
 }
 
 .swal-content__input {
-    font-family: "Open Sans";
+    border: 2px solid var(--primary-color);
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
 }
