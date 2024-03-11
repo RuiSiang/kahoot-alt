@@ -19,6 +19,23 @@ const questions = JSON.parse(fs.readFileSync('problems.json', 'utf-8'))
  */
 let userPointsMap: Record<string, [string, number]> = {}
 
+function getRandomUniqueItems(arr: any[], n: number) {
+  let tempArray = arr.slice()
+  let result = []
+  function getRandomInt(min: number, max: number) {
+    min = Math.ceil(min)
+    max = Math.floor(max)
+    return Math.floor(Math.random() * (max - min) + min)
+  }
+  for (let i = tempArray.length - 1; i > 0; i--) {
+    const j = getRandomInt(0, i + 1)
+    ;[tempArray[i], tempArray[j]] = [tempArray[j], tempArray[i]]
+  }
+
+  result = tempArray.slice(0, n)
+  return result
+}
+
 io.on('connection', (socket: Socket) => {
   let attempt = ''
   let timestamp = 0
@@ -31,7 +48,11 @@ io.on('connection', (socket: Socket) => {
   })
 
   socket.once('start', async () => {
-    for (const question of questions) {
+    const selectQuestions = getRandomUniqueItems(
+      questions,
+      parseInt(process.env.QUESTION_COUNT || '20')
+    )
+    for (const question of selectQuestions) {
       await new Promise<void>(async (resolve) => {
         const toSend: {
           text: string
@@ -89,12 +110,12 @@ io.on('connection', (socket: Socket) => {
 })
 
 const auth = basicAuth({
-  users: { admin: 'password' },
+  users: { admin: 'password' || process.env.PASSWORD },
   challenge: true,
 })
 
 app.use('/host', auth)
 app.use(express.static('public'))
-http.listen(9712 || process.env.PORT, () => {
+http.listen(process.env.PORT || 9712, () => {
   console.log('listening on *:9712')
 })
