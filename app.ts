@@ -50,7 +50,7 @@ io.on('connection', (socket: Socket) => {
   socket.once('start', async () => {
     const selectQuestions = getRandomUniqueItems(
       questions,
-      parseInt(process.env.QUESTION_COUNT || '20')
+      parseInt(process.env.QUESTION_COUNT || '10')
     )
     for (const question of selectQuestions) {
       await new Promise<void>(async (resolve) => {
@@ -82,7 +82,7 @@ io.on('connection', (socket: Socket) => {
       ([, a], [, b]) => b - a
     )
     io.emit('gameover', sortedValues)
-    process.exit(0)
+    setTimeout(process.exit(0), 20000)
   })
 
   socket.on('answer', (answer) => {
