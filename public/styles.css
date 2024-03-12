@@ -13,10 +13,17 @@ body {
     padding: 0;
     background-color: #f4f4f4;
     color: #333;
+    line-height: 1.6;
 }
 
 .swal-button {
     font-weight: bold;
+    padding: 10px;
+    display: block; /* Make buttons fill the container width */
+    margin: 10px auto; /* Center buttons and add some space between them */
+    text-align: center; /* Center button text */
+    width: 90%; /* Adjust button width for smaller screens */
+    box-sizing: border-box; /* Ensure padding doesn't add to the width */
 }
 
 .swal-button--1 { background-color: var(--alert-color); }
@@ -26,6 +33,7 @@ body {
 
 .swal-footer, .swal-content {
     display: flex;
+    flex-direction: column; /* Stack content vertically */
     justify-content: center;
     align-items: center;
 }
@@ -34,8 +42,8 @@ body {
     border: 16px solid #f3f3f3;
     border-top: 16px solid var(--primary-color);
     border-radius: 50%;
-    width: 120px;
-    height: 120px;
+    width: 80px; /* Adjusted for smaller screens */
+    height: 80px;
     animation: spin 1s linear infinite;
 }
 
@@ -44,19 +52,14 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-@media (orientation: landscape) {
-    .swal-modal { width: 50vw; }
-}
-
-@media (orientation: portrait) {
-    .swal-modal { width: 90vw; }
-}
-
 .swal-modal {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     overflow: hidden;
+    width: auto;
+    max-width: 95%;
+    margin: 20px;
 }
 
 .swal-content__input {
@@ -64,4 +67,35 @@ body {
     border-radius: 5px;
     padding: 10px;
     margin-top: 10px;
+    width: calc(100% - 24px); /* Ensure it fits within the modal with padding */
+    box-sizing: border-box;
+}
+
+@media (min-width: 600px) {
+    .swal-button {
+        width: auto; /* Revert button width for larger screens */
+        margin: 0; /* Remove auto margins */
+        display: inline-block; /* Place buttons next to each other where possible */
+        padding: 0.5em 1em; /* Adjust padding */
+    }
+
+    .swal-footer, .swal-content {
+        flex-direction: row; /* Revert to horizontal layout for wider screens */
+    }
+
+    .loader {
+        width: 120px;
+        height: 120px; /* Larger loader for larger screens */
+    }
+
+    .swal-modal {
+        max-width: 70%; /* Optimize modal width for larger screens */
+    }
+}
+
+@media (max-width: 359px) {
+    .swal-button {
+        font-size: 14px; /* Reduce font size to fit more text */
+        padding: 8px; /* Adjust padding to fit smaller screens */
+    }
 }
